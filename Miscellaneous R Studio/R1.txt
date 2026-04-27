@@ -1,0 +1,356 @@
+### **************************************************************** ###
+### ***** Introduction to R basics
+### **************************************************************** ###
+
+# Creating and assigning variable values and displaying the same
+my_int <- 7
+my_int
+my_num <- 7.6
+my_num
+my_char <- 'x'
+my_char
+my_str <- "abracadabra gili gili ge"
+my_str
+y=rep("a",10)
+y
+x=1:10
+paste(x,y,sep="",collapse = "+")
+
+
+# For Date, some points needs to be noted
+my_date <- Sys.Date() # Get todays date and assign it to variable 
+my_date  # Display variable which is of type Date
+
+# For Date value given as string use as.Date to convert it to a Date type
+#my_date <- "2020-08-15"
+my_date <- as.Date("2021-03-07") 
+my_date
+
+## ************ 
+## VECTORS
+## ************
+
+my_vect <- c(1,2,3,4) # integer vector
+my_vect
+my_vect<- 100:200  # integer vector, defined as a sequence
+my_vect
+my_vect[28]
+
+my_vect <- c(1.1,2.34,3.45,4) # integer vector
+my_vect
+
+my_vect <- c("a","b","c")  # character vector
+my_vect
+my_vect <- c("abra","ka","dabra")  # string of vectors
+my_vect
+
+# Vector Arithmetic
+
+vect_basic <- c(5000, 6000, 7000,8000)
+vect_vpay <- c(500, 600, 1900,800)
+vect_sal <- vect_basic + vect_vpay  # component wise addition
+vect_sal
+
+sum(vect_sal)    # Total Salary of the employees
+
+max(vect_sal)    # Maximum Salary among the employees
+which.max(vect_sal) # Which employee gets the maximum salary
+
+min(vect_sal)    # Minimum Salary among the employees
+which.min(vect_sal) # Which employee gets the miniimum salary
+
+mean(vect_sal, na.rm = TRUE)  # Compute average Salary and remove NA value
+sum(vect_sal)/length(vect_sal)  # Same as mean
+
+# Find and replace "Missing" values in a vector
+
+vect_names <- c("Sachin", "Sourav",NA, "Rahul","Laxman","Sehwag","Yuvraj","Harbhajan")
+vect_names
+vect_names<-replace(vect_names, is.na(vect_names), "Virat")
+vect_names
+#OR#
+names_na <- is.na(vect_names) # Creates a Logical vector
+names_na              # Only TRUE for 3rd component, FALSE otherwise
+
+vect_names[names_na] <- "Kohli"
+
+## ************ 
+## MATRIX
+## ************
+
+# Create a Sequence start from 3000, ends at 10000, increment by 500
+vect_sal <- seq(3000, 10000, by = 500)  
+vect_sal
+length(vect_sal)  # How many elements in the Vector?
+
+mat_sal <- matrix(vect_sal, 3,5, byrow = TRUE)  # By default, matrix is filled by columns
+mat_sal
+mat_sal <- matrix(vect_sal, 3,5, byrow = FALSE)  # By default, matrix is filled by columns
+mat_sal
+mat_sal[2,3]  # Element at 2nd row and 3rd column
+
+rowSums(mat_sal)  # Compute Row wise Total
+
+colSums(mat_sal)  # Compute Col wise Total
+
+matr=max(mat_sal)
+matr  # Maximum Salary as per the matrix
+
+max(mat_sal[2,]) # Maximum Salary in the 2nd row of the matrix
+
+A <- matrix(c(1:10), 2,5)
+A
+B <- matrix(c(11:20), 2,5)
+B
+
+A * B  # Element wise multiplication of square matrix
+
+AB <- A %*% t(B)  # Matrix Multiplcation, t(B) is transpose of B
+AB
+dim(AB)   # Dimension of matrix AB
+nrow(AB)  # Number of Rows in AB matrix
+ncol(AB)  # Number of Columns in AB matrix
+
+## ************ 
+## List
+## ************
+
+# Creates a list including 3 components, digits, vowels and players
+# of varying length
+
+my_list <- list(digits=seq(10, 20, by=2),vowels=c("a","e","i","o","u"),
+                my_matrix=matrix(c(11:20), 5,2, byrow = F))
+
+my_list
+length(my_list)  # Number of components in the list, i.e 3
+
+my_list[[1]]         # The 1st component of the list
+my_list[['vowels']] # The 2nd component of the list, accessed using name
+my_list$my_matrix  # The 3rd component of the list
+
+
+my_list[[3]][,2]   # Extracting all row 2nd column from the 3rd component
+my_list[[2]][c(5)] # Extracting 5th element from 2nd component
+my_list[[1]][c(3)] # Extracting 3rd element from 1st component
+
+## ************ 
+## Data Frames
+## ************
+
+empno_vect <- c(1:11)# showing integer, writing C(1,2,3,4,5,6,7,8,9,10,11) will show numeric
+empname_vect <- c(NA,"Steve","Larry",NA,"Elon","Jeff","Tim","Mark","Jack","Satya","Sundar")
+emp_dep <- c("Strategy","Strategy","Strategy",NA,"R&D","Marketing","Sales","HR","Sales","Admin","Admin")
+empsal_vect <- c(10000, 7000, 6000,9999999,12000,12500,11000,13000,13500,14000, 14500)
+empage_vect <- c(27, 20, 22,2,30,34,45,26,40,34, 26)
+
+
+emp_df <- data.frame(empno = empno_vect,
+                     empname = empname_vect,
+                     emp_dept = emp_dep,
+                     empsalary = empsal_vect,
+                     empage=empage_vect
+)
+
+str(emp_df)  # To see the details ofthe structure
+
+emp_df <- data.frame(empno = empno_vect,
+                     empname = empname_vect,
+                     emp_dept = emp_dep,
+                     empsalary = empsal_vect,
+                     empage=empage_vect, 
+                     stringsAsFactors = T)
+
+str(emp_df)  # Data Frame, now strings are NOT conveterted as Factors
+
+nrow(emp_df)  ## How many rows, i.e employees
+
+#inbuild functions
+View(emp_df)
+dim(emp_df)
+str(emp_df)
+head(emp_df)
+tail(emp_df)
+head(emp_df,7)
+tail(emp_df,8)
+table(emp_df$empno)
+table(emp_df$empname)
+min(emp_df$empsalary)
+max(emp_df$empsalary)
+range(emp_df$empsalary)
+summary(emp_df)
+
+#Plot with OPTIONS######################################
+plot(emp_df)
+plot(emp_df$empsalary)
+plot(emp_df$empname)
+plot(emp_df$empage,emp_df$empsalary)
+
+plot(emp_df$empage,emp_df$empsalary,
+     col="Red",
+     pch=15,
+     main="employee name VS employee salary",
+     xlab="employee name",
+     ylab="employee salary")
+
+emp_df<-emp_df[-c(1,4),]
+
+table(emp_df$emp_dept)  # How many employees accross various dept
+
+
+emp_df[,c(1,2,4)]  # 1st,2nd and 4th column of all records
+
+emp_df[4,]  # Fourth Employee, all details
+
+emp_df[, 4]  # Looking at Salary of All employees
+emp_df$empsalary  # Another way, to see the same result. 
+
+emp_df_new<-emp_df[,-2]
+emp_df_new
+# Individual Columns of a DF are vectors
+
+
+# Clean up the Data frame by removing the record with name as NA
+
+emp_name_NA <- is.na(emp_df$empname)  # Get the rows with Name as NA
+emp_name_NA  # Logical Vector, the index where name is NA will have value TRUE, rest FALSE 
+sum(emp_name_NA)  # How many records have employee name as NA
+which(emp_name_NA)  # Which rows records have employee name as NA
+
+
+emp_df_cleaned <- emp_df[!emp_name_NA,]  # Remove the records with name as NA and keep all the rests or emp_df[c(-1,-4),]
+str(emp_df_cleaned)
+emp_df_cleaned
+
+# What is the average salary? who gets the highest salary?
+mean(emp_df_cleaned$empsalary)
+
+hist(emp_df_cleaned$empsalary)  # Histogram of Salary
+
+id_max <- which.max(emp_df_cleaned$empsalary) # Get the record id with the maximum salary
+emp_df_cleaned[id_max,]  # Get the details of employee with maximum salary
+
+######################
+
+dnorm(10, mean = 0, sd = 1) #gives density
+pnorm(0, mean = 0, sd = 1)# gives probability from -Inf(distribution Fn)
+qnorm(.87678, mean = 0, sd = 1) # gives quantile Fn (input==prob)
+rnorm(100, mean = 0, sd = 1)
+plot(rnorm(100, mean = 0, sd = 1))# gives random number
+hist(rnorm(100, mean = 0, sd = 1))
+
+plot(dnorm,-4,4,
+     col="Red",
+     lwd=1,
+     main="Standard normal Distribution",
+     xlab="z-score",
+     ylab="Density")
+
+plot(rnorm,-4,4,
+     col="Red",
+     lwd=1,
+     main="Standard normal Distribution",
+     xlab="z-score",
+     ylab="Density")
+###########  PI Chart#########
+
+x <- c(21, 62, 10, 53)
+labels <- c("London", "New York", "Singapore", "Mumbai")
+# Plot the chart with title and rainbow color pallet.
+pie(x, labels, main = "City pie chart", col = rainbow(length(x)))
+
+
+############    BAR CHART     ###############
+
+# Create the data for the chart
+H <- c(7,12,28,3,41)
+barplot(H)
+
+#########LINE  GRAPH   ###########
+
+v <- c(7,12,28,3,41)
+plot(v,type="o")
+
+
+## ****************************** 
+## Loops and Control  Structures
+## ******************************
+empno_vect <- 1:11
+empname_vect <- c("Bill","Steve","Larry","Donald","Elon","Jeff","Tim","Mark","Jack","Satya","Sundar")
+emp_dep <- c("Strategy","Strategy","Strategy","Trumpet","R&D","Marketing","Sales","HR","Sales","Admin","Admin")
+empsal_vect <- c(10000, 7000, 6000,999999,12000,12500,11000,13000,13500,14000, 14500)
+
+emp_df <- data.frame(empno = empno_vect,
+                     empname = empname_vect,
+                     emp_dept = emp_dep,
+                     empsalary = empsal_vect)
+
+str(emp_df)  # To see the details ofthe structure
+
+emp_df <- data.frame(empno = empno_vect,
+                     empname = empname_vect,
+                     emp_dept = emp_dep,
+                     empsalary = empsal_vect,
+                     stringsAsFactors = F)  # We don't want name and dept as Factors
+
+str(emp_df)
+
+table(emp_df$emp_dept)
+### Company has decided to give increment based on the following
+### Sales, Admin, Marketing, HR,R&D and Starategy People will get 10%
+
+
+emp_revised.df <- emp_df
+l <- nrow(emp_revised.df)
+# Calculate revised salaries based on the above rule in a loop
+
+# Note the usage of index/Rownum inside the loop
+for (i in 1:l) {
+  if (emp_revised.df$emp_dept[i] %in% c("Admin","Marketing","Sales","HR","Strategy","R&D")) 
+    emp_revised.df$empsalary[i] <- (1.1) * (emp_revised.df$empsalary[i])
+}
+
+# What is the total increase in payments for the org
+Total_increase <- sum(emp_revised.df$empsalary) - sum(emp_df$empsalary)
+Total_increase.pct <- Total_increase / sum(emp_df$empsalary)
+
+
+## ************ 
+## Function
+## ************
+# Lets use the emp_revised.df but drop the "Donald" record
+emp_revised.df
+emp_revised.df <- emp_revised.df[-4,]
+
+# Can you retrieve the employee with maximum salary?
+# Can we write a function so that it can be reused
+# for other DFs with similar structure
+
+EmployeeMaxSal <- function(input.df){
+  maxsal.id <- which.max(input.df$empsalary)
+  emplmaxsal.df <- input.df[maxsal.id,]
+  return(emplmaxsal.df)
+}
+
+maxsalary.employee <- EmployeeMaxSal(emp_revised.df) # Calling the function with argument
+maxsalary.employee
+
+
+
+## **************************************** 
+## Reading Data from external source into R 
+## ****************************************
+# Reading delimited Text files saved as .txt
+TempFile_location <- "E:/Laptop Backup/Debu/General/General/Personal/IIFT/ML Course/Housing Price/TempFile.txt"
+
+temp.df <- read.table(TempFile_location, header = TRUE, sep = "|")
+str(temp.df) # Display Structure of Dataframe
+
+# Reading from csv file, created with excel
+# Step 1: Read the available data saved as csv file to a Dataframe
+
+RetailFile_location <- "E:/Laptop Backup/Debu/General/General/Personal/IIFT/ML Course/Housing Price/Online_Retail.csv"
+
+RetailData.df <- read.csv(RetailFile_location, stringsAsFactors = FALSE)
+str(RetailData.df)   # Display Structure of R object 
+summary(RetailData.df)  # Provide summary(min, median, mean, max etc, also NAs) of vector/Dataframe
+head(RetailData.df)
